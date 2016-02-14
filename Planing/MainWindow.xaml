@@ -1,0 +1,86 @@
+﻿<Window x:Class="Planing.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:xPlorerBar="clr-namespace:ZonaTools.XPlorerBar;assembly=ZonaTools.XPlorerBar"
+        WindowState="Maximized"
+        Title="Planing Universitaire" Height="550" Width="700">
+    <DockPanel >
+
+<Menu DockPanel.Dock="Top">
+    
+            <MenuItem Header="Fichier"></MenuItem>
+            <MenuItem Header="Paramètres">
+                <MenuItem Header="Faculté" Click="ButtonBase_OnClick"/>
+                <MenuItem Header="Niveau" Click="ButtonBase_OnClick"/>
+                <MenuItem Header="Année" Click="ButtonBase_OnClick"/>
+                <MenuItem Header="Année scolaire" Click="ButtonBase_OnClick"/>
+                <MenuItem Header="Spécialité" Click="ButtonBase_OnClick"/>
+            </MenuItem>
+            <MenuItem Header="Structure">
+                <MenuItem Header="Modules" Click="ButtonBase_OnClick"/>
+                <MenuItem Header="Salles" Click="ButtonBase_OnClick"/>
+                <MenuItem Header="Séctions" Click="ButtonBase_OnClick"/>
+                <MenuItem Header="Groupes" Click="ButtonBase_OnClick"/>
+                <MenuItem Header="Ensiegnants" Click="ButtonBase_OnClick"/>
+            </MenuItem>
+        </Menu>
+        <Border BorderBrush="DarkGray"  BorderThickness="2">
+            <!--<Border.Background>
+                <LinearGradientBrush EndPoint="0.144,0.49" MappingMode="RelativeToBoundingBox" StartPoint="0.87,0.303">
+                    <GradientStop Color="#FF7F99CC" Offset="0"/>
+                    <GradientStop Color="#FFF9F9F9" Offset="0.46"/>
+                </LinearGradientBrush>
+            </Border.Background>-->
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="127*"/>
+                </Grid.ColumnDefinitions>
+                <xPlorerBar:XPlorerBar  Width="230" 
+                                      xPlorerBar:ThemeManager.Theme="LunaBlue"
+                                      AllowMultipleExpands="{Binding ElementName=chMultipleExpands, Path=IsChecked}">
+
+                    <xPlorerBar:XPlorerSection  IsExpanded="True" IsPrimary="{Binding ElementName=chPrimary, Path=IsChecked}" Header="Paramètres">
+                        <StackPanel>
+                            <xPlorerBar:XPlorerItem ItemText="Faculté" Click="ButtonBase_OnClick"/>
+                            <xPlorerBar:XPlorerItem ItemText="Niveau" Click="ButtonBase_OnClick"/>
+                            <xPlorerBar:XPlorerItem ItemText="Année scolaire" Click="ButtonBase_OnClick"/>
+                            <xPlorerBar:XPlorerItem ItemText="Année" Click="ButtonBase_OnClick"/>
+                            <xPlorerBar:XPlorerItem ItemText="Spécialité" Click="ButtonBase_OnClick"/>
+
+                        </StackPanel>
+                    </xPlorerBar:XPlorerSection>
+                    <xPlorerBar:XPlorerSection Header="Structure" >
+                        <StackPanel>
+                           
+                            <xPlorerBar:XPlorerItem ItemText="Modules" Click="ButtonBase_OnClick"/>
+                            <xPlorerBar:XPlorerItem ItemText="Salles" Click="ButtonBase_OnClick"/>
+                            <xPlorerBar:XPlorerItem ItemText="Séctions" Click="ButtonBase_OnClick"/>
+                            <xPlorerBar:XPlorerItem ItemText="Groupes" Click="ButtonBase_OnClick"/>
+                            <xPlorerBar:XPlorerItem ItemText="Enseignants" Click="ButtonBase_OnClick"/>
+
+                        </StackPanel>
+
+                    </xPlorerBar:XPlorerSection>
+
+                    <xPlorerBar:XPlorerSection Header="Gestion de magasin">
+                        <StackPanel>
+                            <xPlorerBar:XPlorerItem ItemText="Bons d'entrées" Click="ButtonBase_OnClick"/>
+                            <xPlorerBar:XPlorerItem ItemText="Nouveau stock" Click="ButtonBase_OnClick"/>
+                            <xPlorerBar:XPlorerItem ItemText="Commandes Internes" Click="ButtonBase_OnClick"/>
+                            <xPlorerBar:XPlorerItem ItemText="Bons de sortie" Click="ButtonBase_OnClick"/>
+                            <xPlorerBar:XPlorerItem ItemText="Distribution du matériels" Click="ButtonBase_OnClick"/>
+                            <xPlorerBar:XPlorerItem ItemText="Matériels par location" Click="ButtonBase_OnClick"/>
+                        </StackPanel>
+                    </xPlorerBar:XPlorerSection>
+                </xPlorerBar:XPlorerBar>
+                <Border Grid.Column="1" Background="White" BorderThickness="1" BorderBrush="LightGray" Width="Auto" Margin="2" Grid.ColumnSpan="2"  >
+                    <ContentControl Name="ContentControl">
+                    </ContentControl>
+                </Border>
+            </Grid>
+        </Border>
+
+    </DockPanel>
+</Window>
