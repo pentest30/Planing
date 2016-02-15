@@ -19,7 +19,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <GroupBox  BorderBrush="Gray" Margin="5" Header="Liste des Enseignants:">
-            <Grid DataContext="{Binding ElementName=DataGrid , Path=SelectedItem}" Name="Grid" Grid.Row="0" Margin="10">
+            <Grid DataContext="{Binding ElementName=DataGrid , Path=SelectedItem}" Name="Grid" Margin="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
@@ -64,9 +64,8 @@
                     Name="DataGrid">
                
                 <DataGrid.Columns>
-                    <DataGridTextColumn Width="*" Header="N°" Binding="{Binding NBon}"/>
-                    <DataGridTextColumn Width="*" Header="Date d'entrée" Binding="{Binding DateEntree, StringFormat=d}"/>
-                    <DataGridTextColumn Width="*" Header="Magasin" Binding="{Binding Magasin.Libelle}"/>
+                    <DataGridTextColumn Width="*" Header="Nom" Binding="{Binding Nom}"/>
+                    <DataGridTextColumn Width="*" Header="Prénom" Binding="{Binding Prenom}"/>
                 </DataGrid.Columns>
             </DataGrid>
             <Button  FontSize="9"
@@ -75,14 +74,14 @@
                         Click="AddButton_OnClick"
                         
                          Margin="5,0,0,2" 
-                         Content="Ajouter BE"
+                         Content="Ajouter "
                          Grid.Row="0" Grid.Column="1" />
             <Button  
                 FontSize="9"
                     Click="UpdateButton_OnClick"
                         x:Name="UpdateButton"  
                         Margin="5,0,0,2" 
-                        Content="Modifier BE" 
+                        Content="Modifier " 
                         Grid.Row="1" Grid.Column="1"/>
             <Button  FontSize="9"
                      
@@ -103,10 +102,10 @@
                        x:Name="DeleteButton" 
                     Click="DeleteButton_OnClick"
                         Margin="5,0,0,2" 
-                        Content="Supprimer BE" 
+                        Content="Supprimer " 
                         Grid.Row="2" Grid.Column="1"/>
             <Button Grid.Row="3" Grid.Column="1" FontSize="9"
-                    Content="Ajouter une ligne"
+                    Content="Ajouter Horaire"
                      Margin="5,0,0,2" 
                     Name="LBonAddBtn"
                     Click="LBonAddBtn_OnClick"/>
@@ -141,8 +140,8 @@
                     <DataGridTextColumn Width="*" Header="Qnt" Binding="{Binding Path=Qnt}"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <Button Name="BtnModifierBeLigne" Grid.Column="1" Grid.Row="0" Margin="5,0,0,2" Content="Modifier Ligne" FontSize="9" Click="BtnModifierBeLigne_OnClick"/>
-            <Button Grid.Column="1" Grid.Row="1" Margin="5,0,0,2" Name="DeleteBeLignesButton" Click="DeleteBeLignesButton_OnClick" Content="Supprimer Ligne" FontSize="9"/>
+            <Button Name="BtnModifierBeLigne" Grid.Column="1" Grid.Row="0" Margin="5,0,0,2" Content="Modifier Horaire" FontSize="9" Click="BtnModifierBeLigne_OnClick"/>
+            <Button Grid.Column="1" Grid.Row="1" Margin="5,0,0,2" Name="DeleteBeLignesButton" Click="DeleteBeLignesButton_OnClick" Content="Supprimer Horaire" FontSize="9"/>
         </Grid>
 
 

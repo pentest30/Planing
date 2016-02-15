@@ -1,10 +1,11 @@
-﻿<UserControl x:Class="Planing.Views.SpecialiteView"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:converters="clr-namespace:Planing.Converters"
              xmlns:helpers="clr-namespace:WPF.Core.Helpers;assembly=WPF.Core"
+             xmlns:models="clr-namespace:Planing.Models" x:Class="Planing.Views.SpecialiteView"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -25,11 +26,11 @@
             </Grid.ColumnDefinitions>
 
             <GroupBox BorderBrush="Gray" Header="Spécialité:" Margin="10" >
-                <Grid x:Name="Grid" Margin="10" DataContext="{Binding ElementName=DataGrid ,Path=SelectedItem}" >
+                <Grid x:Name="Grid" Margin="10" DataContext="{Binding SelectedItem, ElementName=DataGrid}" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="30"/>
-                        <RowDefinition Height="0"/>
+                        <RowDefinition Height="30"/>
                         <RowDefinition Height="0"/>
                         <RowDefinition Height="0"/>
                     </Grid.RowDefinitions>
@@ -46,28 +47,29 @@
 						Text="{Binding Code}"/>
                     <TextBlock VerticalAlignment="Center" Grid.Column="2" Grid.Row="0" Text="Libelle:"/>
                     <TextBox CharacterCasing="Upper"
-                             Margin="2"
+						Margin="2"
 						IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}" 
 						Grid.Row="0" Grid.Column="3" 
-						Text="{Binding Libelle}"/>
+						Text="{Binding Name}"/>
                     <TextBlock VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" Text="Faculté:"/>
                     <ComboBox SelectionChanged="CbCategorie_OnSelectionChanged" IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}"
 						x:Name="CbCategorie" 
 						Grid.Column="1" 
 						Grid.Row="1" 
-                              Margin="2"
+						Margin="2"
 						DisplayMemberPath="Libelle"
 						SelectedValue="{Binding FaculteId}" 
 						SelectedValuePath="Id"/>
 
-                    <TextBlock VerticalAlignment="Center" Grid.Column="2" Grid.Row="1" Text="Année:"/>
+                  
+                    <TextBlock VerticalAlignment="Center" Grid.Column="2" Grid.Row="1" Text="Niveau:"/>
                     <helpers:AutoFilteredComboBox Margin="2" 
 						IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}"
-						x:Name="CbSousCategorie" 
+						x:Name="CbNieau" 
 						Grid.Column="3" 
 						Grid.Row="1" 
 						DisplayMemberPath="Libelle"
-						SelectedValue="{Binding AnneeId}" 
+						SelectedValue="{Binding NiveauId}" 
 						SelectedValuePath="Id"
 						/>
                 </Grid>
@@ -101,11 +103,14 @@
 				IsReadOnly="True"
 				x:Name="DataGrid">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Width="*" Header="Module" Binding="{Binding Path=Libelle}"/>
+                    <DataGridTextColumn Width="*" Header="Module" Binding="{Binding Name}"/>
                     <DataGridTextColumn Width="*" Header="Code" Binding="{Binding Code}"/>
-                    <DataGridTextColumn Width="*" Header="Spécialité" Binding="{Binding Specialite.Libelle}"/>
-                    <DataGridTextColumn Width="*" Header="Année" Binding="{Binding Annee.Name}"/>
+                    <DataGridTextColumn Width="*" Header="Spécialité" Binding="{Binding Faculte.Libelle}"/>
+                    <DataGridTextColumn Width="*" Header="Niveau" Binding="{Binding Niveau.Libelle}"/>
                 </DataGrid.Columns>
+                <DataGrid.DataContext>
+                    <models:Specialite/>
+                </DataGrid.DataContext>
             </DataGrid>
             <Button  
 				Visibility="Visible" 

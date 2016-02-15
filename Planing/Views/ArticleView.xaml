@@ -33,7 +33,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="30"/>
-                        <RowDefinition Height="0"/>
+                        <RowDefinition Height="30"/>
                         <RowDefinition Height="0"/>
                         <RowDefinition Height="0"/>
                     </Grid.RowDefinitions>
@@ -74,6 +74,15 @@
 						SelectedValue="{Binding AnneeId}" 
 						SelectedValuePath="Id"
 						/>
+                    <TextBlock VerticalAlignment="Center" Grid.Column="0" Grid.Row="2" Text="Type de Module:"/>
+                    <ComboBox SelectionChanged="CbCategorie_OnSelectionChanged" IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}"
+						x:Name="CbTypeCourse" 
+						Grid.Column="1" 
+						Grid.Row="2" 
+                              Margin="2"
+						DisplayMemberPath="Libelle"
+						SelectedValue="{Binding SpecialiteId}" 
+						SelectedValuePath="Id"/>
                 </Grid>
             </GroupBox>
             <Grid Grid.Column="1" Margin="20">

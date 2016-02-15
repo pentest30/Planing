@@ -98,6 +98,34 @@
     <Compile Include="Migrations\201602141007479_pl3.Designer.cs">
       <DependentUpon>201602141007479_pl3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201602151044242_pl31.cs" />
+    <Compile Include="Migrations\201602151044242_pl31.Designer.cs">
+      <DependentUpon>201602151044242_pl31.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602151046101_pl311.cs" />
+    <Compile Include="Migrations\201602151046101_pl311.Designer.cs">
+      <DependentUpon>201602151046101_pl311.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602151050056_pl315.cs" />
+    <Compile Include="Migrations\201602151050056_pl315.Designer.cs">
+      <DependentUpon>201602151050056_pl315.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602151127221_pl3155.cs" />
+    <Compile Include="Migrations\201602151127221_pl3155.Designer.cs">
+      <DependentUpon>201602151127221_pl3155.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602151159349_pl45.cs" />
+    <Compile Include="Migrations\201602151159349_pl45.Designer.cs">
+      <DependentUpon>201602151159349_pl45.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602151208596_gh.cs" />
+    <Compile Include="Migrations\201602151208596_gh.Designer.cs">
+      <DependentUpon>201602151208596_gh.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602151216518_54.cs" />
+    <Compile Include="Migrations\201602151216518_54.Designer.cs">
+      <DependentUpon>201602151216518_54.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\ArticleView.xaml.cs">
       <DependentUpon>ArticleView.xaml</DependentUpon>
     </Compile>
@@ -199,6 +227,27 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201602141007479_pl3.resx">
       <DependentUpon>201602141007479_pl3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602151044242_pl31.resx">
+      <DependentUpon>201602151044242_pl31.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602151046101_pl311.resx">
+      <DependentUpon>201602151046101_pl311.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602151050056_pl315.resx">
+      <DependentUpon>201602151050056_pl315.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602151127221_pl3155.resx">
+      <DependentUpon>201602151127221_pl3155.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602151159349_pl45.resx">
+      <DependentUpon>201602151159349_pl45.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602151208596_gh.resx">
+      <DependentUpon>201602151208596_gh.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602151216518_54.resx">
+      <DependentUpon>201602151216518_54.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -9,6 +9,8 @@
         public string HourStart { get; set; }
         public string HourEnd { get; set; }
         public int TeacherId { get; set; }
+        public int  Semestre { get; set; }
+        public Teacher Teacher { get; set; }
 
     }
 }

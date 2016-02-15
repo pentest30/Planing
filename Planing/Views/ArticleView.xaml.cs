@@ -1,6 +1,8 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using Planing.Models;
 
 namespace Planing.Views
 {
@@ -21,7 +23,10 @@ namespace Planing.Views
 
         private void AddButton_OnClick(object sender, RoutedEventArgs e)
         {
-
+            AddButton.Visibility = Visibility.Hidden;
+            var list = DataGrid.ItemsSource.OfType<Specialite>().ToList();
+            list.Add(new Specialite());
+            Grid.DataContext = list.Last();  
         }
 
         private void UpdateButton_OnClick(object sender, RoutedEventArgs e)
