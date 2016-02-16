@@ -7,13 +7,13 @@ namespace Planing.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class pl2 : IMigrationMetadata
+    public sealed partial class te25 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(pl2));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(te25));
         
         string IMigrationMetadata.Id
         {
-            get { return "201602140953580_pl2"; }
+            get { return "201602161335067_te25"; }
         }
         
         string IMigrationMetadata.Source

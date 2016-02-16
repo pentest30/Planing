@@ -49,15 +49,15 @@
                              Margin="2"
 						IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}" 
 						Grid.Row="0" Grid.Column="3" 
-						Text="{Binding Libelle}"/>
+						Text="{Binding Name}"/>
                     <TextBlock VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" Text="Type Salle:"/>
                     <ComboBox SelectionChanged="CbCategorie_OnSelectionChanged" IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}"
 						x:Name="CbCategorie" 
 						Grid.Column="1" 
 						Grid.Row="1" 
                               Margin="2"
-						DisplayMemberPath="Libelle"
-						SelectedValue="{Binding SpecialiteId}" 
+						DisplayMemberPath="Name"
+						SelectedValue="{Binding ClassRoomTypeId}" 
 						SelectedValuePath="Id"/>
 
                     <TextBlock VerticalAlignment="Center" Grid.Column="2" Grid.Row="1" Text="Faculté:"/>
@@ -67,7 +67,7 @@
 						Grid.Column="3" 
 						Grid.Row="1" 
 						DisplayMemberPath="Libelle"
-						SelectedValue="{Binding AnneeId}" 
+						SelectedValue="{Binding FaculteId}" 
 						SelectedValuePath="Id"
 						/>
                     <TextBlock VerticalAlignment="Center" Grid.Column="0" Grid.Row="2" Text="Capacité MIN:"/>
@@ -77,7 +77,7 @@
 						Grid.Column="1"
                              
 						Margin="2"
-						Text="{Binding Semestre}"/>
+						Text="{Binding MinSize}"/>
                     <TextBlock VerticalAlignment="Center" Grid.Column="2" Grid.Row="2" Text="Capacité MAX:"/>
                     <TextBox helpers:TextBoxMaskBehavior.Mask="Integer"
 						IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}" 
@@ -85,7 +85,7 @@
 						Grid.Column="3"
                              
 						Margin="2"
-						Text="{Binding Semestre}"/>
+						Text="{Binding MaxSize}"/>
                 </Grid>
             </GroupBox>
             <Grid Grid.Column="1" Margin="20">
@@ -117,10 +117,10 @@
 				IsReadOnly="True"
 				x:Name="DataGrid">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Width="*" Header="Module" Binding="{Binding Path=Libelle}"/>
+                    <DataGridTextColumn Width="*" Header="Nom" Binding="{Binding Name}"/>
                     <DataGridTextColumn Width="*" Header="Code" Binding="{Binding Code}"/>
-                    <DataGridTextColumn Width="*" Header="Spécialité" Binding="{Binding Specialite.Libelle}"/>
-                    <DataGridTextColumn Width="*" Header="Année" Binding="{Binding Annee.Name}"/>
+                    <DataGridTextColumn Width="*" Header="Spécialité" Binding="{Binding Faculte.Libelle}"/>
+                    <DataGridTextColumn Width="*" Header="Année" Binding="{Binding ClassRoomType.Name}"/>
                 </DataGrid.Columns>
             </DataGrid>
             <Button  

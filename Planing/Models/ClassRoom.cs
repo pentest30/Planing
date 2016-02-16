@@ -9,6 +9,8 @@
         public int MinSize { get; set; }
         public int MaxSize { get; set; }
         public int FaculteId { get; set; }
+        public int ClassRoomTypeId { get; set; }
         public Faculte Faculte { get; set; }
+        public ClassRoomType ClassRoomType { get; set; }
     }
 }

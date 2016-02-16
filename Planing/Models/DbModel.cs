@@ -24,6 +24,9 @@ namespace Planing.Models
         public DbSet<Section> Sections { get; set; }
         public DbSet<Groupe> Groupes { get; set; }
         public DbSet<Niveau> Niveaus { get; set; }
+        public DbSet<Filliere> Fillieres { get; set; }
+        public DbSet<Departement> Departements { get; set; }
+
 
 
     }

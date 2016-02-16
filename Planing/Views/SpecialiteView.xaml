@@ -7,7 +7,7 @@
              xmlns:helpers="clr-namespace:WPF.Core.Helpers;assembly=WPF.Core"
              xmlns:models="clr-namespace:Planing.Models" x:Class="Planing.Views.SpecialiteView"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="500">
     <UserControl.Resources>
         <converters:Nan2Visible x:Key="Nan2Visible"/>
         <converters:Visible2Enable x:Key="Visible2Enable"/>
@@ -63,13 +63,36 @@
 
                   
                     <TextBlock VerticalAlignment="Center" Grid.Column="2" Grid.Row="1" Text="Niveau:"/>
-                    <helpers:AutoFilteredComboBox Margin="2" 
+                    <ComboBox Margin="2" 
 						IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}"
 						x:Name="CbNieau" 
+                             
 						Grid.Column="3" 
 						Grid.Row="1" 
 						DisplayMemberPath="Libelle"
 						SelectedValue="{Binding NiveauId}" 
+						SelectedValuePath="Id"
+						/>
+                    <TextBlock VerticalAlignment="Center" Grid.Column="0" Grid.Row="2" Text="Département:"/>
+                    <ComboBox SelectionChanged="CbCategorie_OnSelectionChanged" IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}"
+						x:Name="CbDepartement" 
+						Grid.Column="1" 
+						Grid.Row="2" 
+						Margin="2"
+						DisplayMemberPath="Libelle"
+						SelectedValue="{Binding DepartementId}" 
+						SelectedValuePath="Id">
+                      
+                    </ComboBox>
+
+                    <TextBlock VerticalAlignment="Center" Grid.Column="2" Grid.Row="2" Text="Filiere:"/>
+                    <helpers:AutoFilteredComboBox Margin="2" 
+						IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}"
+						x:Name="CbFilliere" 
+						Grid.Column="3" 
+						Grid.Row="2" 
+						DisplayMemberPath="Libelle"
+						SelectedValue="{Binding FilliereId}" 
 						SelectedValuePath="Id"
 						/>
                 </Grid>
@@ -107,6 +130,7 @@
                     <DataGridTextColumn Width="*" Header="Code" Binding="{Binding Code}"/>
                     <DataGridTextColumn Width="*" Header="Spécialité" Binding="{Binding Faculte.Libelle}"/>
                     <DataGridTextColumn Width="*" Header="Niveau" Binding="{Binding Niveau.Libelle}"/>
+                    <DataGridTextColumn Width="*" Header="Fillière" Binding="{Binding Filliere.Libelle}"/>
                 </DataGrid.Columns>
                 <DataGrid.DataContext>
                     <models:Specialite/>

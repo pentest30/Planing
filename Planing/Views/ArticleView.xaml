@@ -60,7 +60,7 @@
 						Grid.Column="1" 
 						Grid.Row="1" 
                               Margin="2"
-						DisplayMemberPath="Libelle"
+						DisplayMemberPath="Name"
 						SelectedValue="{Binding SpecialiteId}" 
 						SelectedValuePath="Id"/>
 
@@ -70,7 +70,7 @@
 						x:Name="CbSousCategorie" 
 						Grid.Column="3" 
 						Grid.Row="1" 
-						DisplayMemberPath="Libelle"
+						DisplayMemberPath="Name"
 						SelectedValue="{Binding AnneeId}" 
 						SelectedValuePath="Id"
 						/>
@@ -80,7 +80,7 @@
 						Grid.Column="1" 
 						Grid.Row="2" 
                               Margin="2"
-						DisplayMemberPath="Libelle"
+						DisplayMemberPath="Name"
 						SelectedValue="{Binding SpecialiteId}" 
 						SelectedValuePath="Id"/>
                 </Grid>

@@ -14,14 +14,16 @@ namespace Planing.Views
     /// </summary>
     public partial class SpecialiteView
     {
-        DbModel db = new DbModel();
+        readonly DbModel _db = new DbModel();
+
         public SpecialiteView()
         {
             InitializeComponent();
-           // CbSousCategorie.ItemsSource = db.Annees.ToList();
-            CbCategorie.ItemsSource = db.Facultes.ToList();
-                CbNieau.ItemsSource = db.Niveaus.ToList();
-            DataGrid.ItemsSource = db.Specialites.Include("Niveau").Include("Faculte").ToList();
+            // CbSousCategorie.ItemsSource = db.Annees.ToList();
+            CbCategorie.ItemsSource = _db.Facultes.ToList();
+            CbNieau.ItemsSource = _db.Niveaus.ToList();
+            CbFilliere.ItemsSource = _db.Fillieres.ToList();
+            DataGrid.ItemsSource = _db.Specialites.Include("Niveau").Include("Faculte").ToList();
         }
 
         private void DeleteButton_OnClick(object sender, RoutedEventArgs e)
@@ -36,9 +38,9 @@ namespace Planing.Views
             if (!result.ToString().Equals("Yes")) return;
             var deleted = DataGrid.SelectedItem as Specialite;
             if (deleted == null) return;
-            db.Entry(deleted).State =EntityState.Deleted;
-            db.SaveChanges();
-            DataGrid.ItemsSource = db.Specialites.Include("Niveau").Include("Faculte").ToList();
+            _db.Entry(deleted).State =EntityState.Deleted;
+            _db.SaveChanges();
+            DataGrid.ItemsSource = _db.Specialites.Include("Niveau").Include("Faculte").ToList();
         }
 
         private void BackButton_OnClick(object sender, RoutedEventArgs e)
@@ -55,16 +57,16 @@ namespace Planing.Views
             var item = (Specialite)Grid.DataContext;
              if (item.Id <= 0)
              {
-                 db.Specialites.Add(item);
+                 _db.Specialites.Add(item);
                  // ((ObservableCollection<Article>)DataGrid.ItemsSource).Add(item);
              }
             else
             {
-                db.Entry(item).State = EntityState.Modified;
+                _db.Entry(item).State = EntityState.Modified;
             }
             try
             {
-                db.SaveChanges();
+                _db.SaveChanges();
             }
             catch (Exception ex)
             {
@@ -75,7 +77,7 @@ namespace Planing.Views
             }
 
             AddButton.Visibility = Visibility.Visible;
-            DataGrid.ItemsSource = new ObservableCollection<Specialite>(db.Specialites.ToList());
+            DataGrid.ItemsSource = new ObservableCollection<Specialite>(_db.Specialites.ToList());
             var binding = new Binding { ElementName = "DataGrid", Path = new PropertyPath("SelectedItem") };
             Grid.SetBinding(DataContextProperty, binding);
             UpdateButton.Visibility = Visibility.Visible;
@@ -104,7 +106,14 @@ namespace Planing.Views
 
         private void CbCategorie_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+            if (CbCategorie.SelectedIndex != -1)
+            {
+                //CbDepartement.SelectedIndex = -1;
+                var id = ((Faculte) CbCategorie.SelectedItem).Id;
+                CbDepartement.ItemsSource = _db.Departements.Where(x=>x.FaculteId == id).ToList();
+            }
         }
+
+        
     }
 }
