@@ -8,6 +8,7 @@
         public int ScheduleWieght { get; set; }
         public int AnneeScolaireId { get; set; }
         public int Semestre { get; set; }
+        public int ClassRoomTypeId { get; set; }
         public AnneeScolaire AnneeScolaire { get; set; }  
         public Teacher Teacher { get; set; }
         public Course Course { get; set; }

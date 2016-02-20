@@ -109,6 +109,7 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
             <DataGrid
+                
 				Grid.Column="0"
 				Grid.Row="0"
 				Grid.RowSpan="5"
@@ -124,6 +125,7 @@
                 </DataGrid.Columns>
             </DataGrid>
             <Button  
+                FontSize="9"
 				Visibility="Visible" 
 				x:Name="AddButton" 
 				Click="AddButton_OnClick"
@@ -132,13 +134,14 @@
 				Content="Ajouter"
 				Grid.Row="0" Grid.Column="1" />
             <Button  
+                FontSize="9"
 				Click="UpdateButton_OnClick"
 				x:Name="UpdateButton"  
 				Margin="5,0,0,2" 
 				Content="Modifier" 
 				Grid.Row="1" Grid.Column="1"/>
             <Button  
-                     
+                     FontSize="9"
 				Visibility="{Binding Visibility, Converter={StaticResource Nan2Visible}, ElementName=AddButton}" 
 				x:Name="SaveButton"  
 				Margin="5,0,0,2" 
@@ -146,6 +149,7 @@
 				Content="Enregistrer" 
 				Grid.Row="0" Grid.Column="1"/>
             <Button 
+                FontSize="9"
 				x:Name="BackButton"  
 				Visibility="{Binding Visibility, Converter={StaticResource Nan2Visible}, ElementName=AddButton}" 
 				Margin="5,0,0,2" 
@@ -153,6 +157,7 @@
 				Click="BackButton_OnClick"
 				Grid.Row="1" Grid.Column="1"/>
             <Button
+                FontSize="9"
 				x:Name="DeleteButton" 
 				Click="DeleteButton_OnClick"
 				Margin="5,0,0,2" 

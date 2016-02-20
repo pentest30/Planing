@@ -1,13 +1,13 @@
-﻿<UserControl
+﻿<UserControl x:Class="Planing.Views.TcView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:converters="clr-namespace:Planing.Converters"
              xmlns:helpers="clr-namespace:WPF.Core.Helpers;assembly=WPF.Core"
-             xmlns:Models="clr-namespace:Planing.Models" x:Class="Planing.Views.SectionView"
+             xmlns:controls="http://schemas.extra.com/ui"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="500">
+             d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <converters:Nan2Visible x:Key="Nan2Visible"/>
         <converters:Visible2Enable x:Key="Visible2Enable"/>
@@ -25,8 +25,8 @@
                 <ColumnDefinition Width="160"/>
             </Grid.ColumnDefinitions>
 
-            <GroupBox BorderBrush="Gray" Header="Séction:" Margin="10" >
-                <Grid x:Name="Grid" Margin="10" DataContext="{Binding SelectedItem, ElementName=DataGrid}" >
+            <GroupBox BorderBrush="Gray" Header="Module:" Margin="10" >
+                <Grid x:Name="Grid" Margin="10" DataContext="{Binding ElementName=DataGrid ,Path=SelectedItem}" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="30"/>
@@ -40,55 +40,82 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock VerticalAlignment="Center" Text="N séction:"/>
-                    <TextBox CharacterCasing="Upper"  
-						IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}" 
-						Grid.Row="0" Margin="2" Grid.Column="1" 
-						Text="{Binding Code}"/>
-                    <TextBlock VerticalAlignment="Center" Grid.Column="2" Grid.Row="0" Text="Libelle:"/>
-                    <TextBox CharacterCasing="Upper"
-						Margin="2"
-						IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}" 
-						Grid.Row="0" Grid.Column="3" 
-						Text="{Binding Name}"/>
-                    <TextBlock VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" Text="Spécialité:"/>
-                    <ComboBox SelectionChanged="CbCategorie_OnSelectionChanged" IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}"
-						x:Name="CbCategorie" 
+                    <TextBlock VerticalAlignment="Center" Text="Enseignant:"/>
+                    <helpers:AutoFilteredComboBox Margin="2" 
+						IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}"
+						x:Name="CbEnseignant" 
 						Grid.Column="1" 
-						Grid.Row="1" 
-						Margin="2"
+						Grid.Row="0" 
 						DisplayMemberPath="Name"
-						SelectedValue="{Binding SpecialiteId}" 
-						SelectedValuePath="Id"/>
+						SelectedValue="{Binding TeacherId}" 
+						SelectedValuePath="Id"
+						/>
+                    <TextBlock VerticalAlignment="Center" Grid.Column="2" Grid.Row="0" Text="Cours:"/>
+                    <controls:ComboDataGrid x:Name="CbCours"
+                                            SelectionChanged="CbCours_OnSelectionChanged"
+                                            Grid.Column="3" 
+                                            Grid.Row="0" 
+                                            Margin="2" 
+                                            DisplayMemberPath="Name" 
+                                            SelectedValuePath="Id" 
+                                            SelectedValue="{Binding Path=CourseId}"
+                                            IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}" 
+						>
+                        <controls:ComboDataGrid.Columns>
+                            <DataGridTextColumn  Header="Module" Binding="{Binding Name}"/>
+                         
+                            <DataGridTextColumn  Header="Type" Binding="{Binding CourseType.Name}"/>
+                            <DataGridTextColumn   Header="Année" Binding="{Binding Annee.Name}"/>
+                           <DataGridTextColumn   Header="Spécialité" Binding="{Binding Specialite.Name}"/>
+                        </controls:ComboDataGrid.Columns>
+                    </controls:ComboDataGrid>
 
-                    <TextBlock VerticalAlignment="Center" Grid.Column="2" Grid.Row="1" Text="Année:"/>
+                    <TextBlock VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" Text="Séction: "/>
+                    <controls:ComboDataGrid x:Name="CbArticle"
+                                            SelectionChanged="CbArticle_OnSelectionChanged"
+                                            Grid.Column="1" 
+                                            Grid.Row="1" 
+                                            Margin="2" 
+                                            DisplayMemberPath="Name" 
+                                            SelectedValuePath="Id" 
+                                            SelectedValue="{Binding Path=SectionId}"
+                                            IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}" 
+						>
+                        <controls:ComboDataGrid.Columns>
+                            <DataGridTextColumn  Header="Séction" Binding="{Binding Name}"/>
+                            <DataGridTextColumn  Header="Code" Binding="{Binding Code}"/>
+                            <DataGridTextColumn   Header="Année scolaire" Binding="{Binding AnneeScolaire.Name}"/>
+                            <DataGridTextColumn   Header="Nombre" Binding="{Binding Nombre}"/>
+                        </controls:ComboDataGrid.Columns>
+                    </controls:ComboDataGrid>
+
+                    <TextBlock VerticalAlignment="Center" Grid.Column="2" Grid.Row="1" Text="Groupe:"/>
                     <helpers:AutoFilteredComboBox Margin="2" 
 						IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}"
 						x:Name="CbSousCategorie" 
 						Grid.Column="3" 
 						Grid.Row="1" 
 						DisplayMemberPath="Name"
-						SelectedValue="{Binding AnneeId}" 
+						SelectedValue="{Binding GroupeId}" 
 						SelectedValuePath="Id"
 						/>
-                    <TextBlock VerticalAlignment="Center" Grid.Column="0" Grid.Row="2" Text="Semestre:"/>
+                    <TextBlock VerticalAlignment="Center" Grid.Column="0" Grid.Row="2" Text="Type de Classe:"/>
+                    <ComboBox SelectionChanged="CbCategorie_OnSelectionChanged" IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}"
+						x:Name="CbTypeCourse" 
+						Grid.Column="1" 
+						Grid.Row="2" 
+                              Margin="2"
+						DisplayMemberPath="Name"
+						SelectedValue="{Binding SpecialiteId}" 
+						SelectedValuePath="Id"/>
+                    <TextBlock VerticalAlignment="Center" Grid.Column="2" Grid.Row="2" Text="Nombre de séances:"/>
                     <TextBox helpers:TextBoxMaskBehavior.Mask="Integer"
 						IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}" 
 						Grid.Row="2" 
-						Grid.Column="1"
+						Grid.Column="3"
                              
 						Margin="2"
-						Text="{Binding Semestre}"/>
-                    <TextBlock VerticalAlignment="Center" Grid.Column="2" Grid.Row="2" Text="Année scolaire:"/>
-                    <helpers:AutoFilteredComboBox Margin="2" 
-						IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}"
-						x:Name="CbAnneeScolaire" 
-						Grid.Column="3" 
-						Grid.Row="2" 
-						DisplayMemberPath="Name"
-						SelectedValue="{Binding AnneeScolaireId}" 
-						SelectedValuePath="Id"
-						/>
+						Text="{Binding ScheduleWieght}"/>
                 </Grid>
             </GroupBox>
             <Grid Grid.Column="1" Margin="20">
@@ -120,18 +147,13 @@
 				IsReadOnly="True"
 				x:Name="DataGrid">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Width="*" Header="Module" Binding="{Binding Name}"/>
+                    <DataGridTextColumn Width="*" Header="Module" Binding="{Binding Path=Libelle}"/>
                     <DataGridTextColumn Width="*" Header="Code" Binding="{Binding Code}"/>
-                    <DataGridTextColumn Width="*" Header="Spécialité" Binding="{Binding Specialite.Name}"/>
+                    <DataGridTextColumn Width="*" Header="Spécialité" Binding="{Binding Specialite.Libelle}"/>
                     <DataGridTextColumn Width="*" Header="Année" Binding="{Binding Annee.Name}"/>
-                    <DataGridTextColumn Width="*" Header="Spécialité" Binding="{Binding AnneeScolaire.Name}"/>
-                    <DataGridTextColumn Width="*" Header="Année" Binding="{Binding Semestre}"/>
                 </DataGrid.Columns>
-                <DataGrid.DataContext>
-                    <Models:Section/>
-                </DataGrid.DataContext>
             </DataGrid>
-            <Button  
+            <Button 
                 FontSize="9"
 				Visibility="Visible" 
 				x:Name="AddButton" 

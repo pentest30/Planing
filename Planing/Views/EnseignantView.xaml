@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:converters="clr-namespace:Planing.Converters"
-             xmlns:helpers="clr-namespace:WPF.Core.Helpers;assembly=WPF.Core"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -28,15 +27,25 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30"/>
-                    <RowDefinition Height="0"/>
+                    <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
 
 
 
                 <TextBlock VerticalAlignment="Center" Text="Nom:"/>
-                <TextBox Margin="2" IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}" Text="{Binding NBon}"  Grid.Column="1" Grid.Row="0"/>
+                <TextBox Margin="2" IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}" Text="{Binding Nom}"  Grid.Column="1" Grid.Row="0"/>
                 <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Text="Prénom:"/>
-                <TextBox Margin="2" IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}" Text="{Binding NBon}"  Grid.Column="3" Grid.Row="0"/>
+                <TextBox Margin="2" IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}" Text="{Binding Prenom}"  Grid.Column="3" Grid.Row="0"/>
+                <TextBlock VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" Text="Faculté:"/>
+                <ComboBox  IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}"
+						x:Name="CbCategorie" 
+						Grid.Column="1" 
+						Grid.Row="1" 
+						Margin="2"
+						DisplayMemberPath="Libelle"
+						SelectedValue="{Binding FaculteId}" 
+						SelectedValuePath="Id"/>
+
             </Grid>
         </GroupBox>
         <Grid Grid.Row="1" Margin="5">
@@ -66,6 +75,7 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="*" Header="Nom" Binding="{Binding Nom}"/>
                     <DataGridTextColumn Width="*" Header="Prénom" Binding="{Binding Prenom}"/>
+                    <DataGridTextColumn Width="*" Header="Faculte" Binding="{Binding Faculte.Libelle}"/>
                 </DataGrid.Columns>
             </DataGrid>
             <Button  FontSize="9"
@@ -107,6 +117,7 @@
             <Button Grid.Row="3" Grid.Column="1" FontSize="9"
                     Content="Ajouter Horaire"
                      Margin="5,0,0,2" 
+                    
                     Name="LBonAddBtn"
                     Click="LBonAddBtn_OnClick"/>
         </Grid>
@@ -127,17 +138,16 @@
             <DataGrid
                 Grid.Column="0"
                 Grid.Row="0"
-               
-                Grid.RowSpan="4"
+               Grid.RowSpan="4"
                     IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Enable}, ElementName=AddButton}" 
                     AutoGenerateColumns="False" 
                     CanUserAddRows="False" 
                     Name="DataGridLignes">
                
                 <DataGrid.Columns>
-                    <DataGridTextColumn Width="*" Header="Matériel" Binding="{Binding Path=Article.SousCategorie.Libelle}"/>
-                    <DataGridTextColumn Width="*" Header="Modél" Binding="{Binding Path=Article.Libelle}"/>
-                    <DataGridTextColumn Width="*" Header="Qnt" Binding="{Binding Path=Qnt}"/>
+                    <DataGridTextColumn Width="*" Header="Anneé scolaire" Binding="{Binding Path=AnneeScolaire.Name}"/>
+                    <DataGridTextColumn Width="*" Header="Semestre" Binding="{Binding Path=Semestre}"/>
+                    <DataGridTextColumn Width="*" Header="Jour" Binding="{Binding Path=Day}"/>
                 </DataGrid.Columns>
             </DataGrid>
             <Button Name="BtnModifierBeLigne" Grid.Column="1" Grid.Row="0" Margin="5,0,0,2" Content="Modifier Horaire" FontSize="9" Click="BtnModifierBeLigne_OnClick"/>

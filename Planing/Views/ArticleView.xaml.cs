@@ -31,8 +31,8 @@ namespace Planing.Views
         private void AddButton_OnClick(object sender, RoutedEventArgs e)
         {
             AddButton.Visibility = Visibility.Hidden;
-            var list = DataGrid.ItemsSource.OfType<Specialite>().ToList();
-            list.Add(new Specialite());
+            var list = DataGrid.ItemsSource.OfType<Course>().ToList();
+            list.Add(new Course());
             Grid.DataContext = list.Last();  
         }
 
@@ -50,10 +50,10 @@ namespace Planing.Views
 
         private void SaveButton_OnClick(object sender, RoutedEventArgs e)
         {
-            var item = (Specialite)Grid.DataContext;
+            var item = (Course)Grid.DataContext;
             if (item.Id <= 0)
             {
-                _db.Specialites.Add(item);
+                _db.Courses.Add(item);
                 // ((ObservableCollection<Article>)DataGrid.ItemsSource).Add(item);
             }
             else
@@ -73,7 +73,7 @@ namespace Planing.Views
             }
 
             AddButton.Visibility = Visibility.Visible;
-            DataGrid.ItemsSource = new ObservableCollection<Course>(_db.Courses.ToList());
+            DataGrid.ItemsSource = _db.Courses.Include("Specialite").Include("Annee").ToList();
             var binding = new Binding { ElementName = "DataGrid", Path = new PropertyPath("SelectedItem") };
             Grid.SetBinding(DataContextProperty, binding);
             UpdateButton.Visibility = Visibility.Visible;
@@ -99,7 +99,7 @@ namespace Planing.Views
             var result = MessageBox.Show("Est vous sure!", "Warning", MessageBoxButton.YesNo,
                 MessageBoxImage.Warning);
             if (!result.ToString().Equals("Yes")) return;
-            var deleted = DataGrid.SelectedItem as Specialite;
+            var deleted = DataGrid.SelectedItem as Course;
             if (deleted == null) return;
             _db.Entry(deleted).State = EntityState.Deleted;
             _db.SaveChanges();

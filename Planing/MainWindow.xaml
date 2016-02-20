@@ -1,29 +1,13 @@
-﻿<Window x:Class="Planing.MainWindow"
+﻿<controls:Window x:Class="Planing.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:xPlorerBar="clr-namespace:ZonaTools.XPlorerBar;assembly=ZonaTools.XPlorerBar"
         WindowState="Maximized"
+        xmlns:controls="http://schemas.extra.com/ui"
         Title="Planing Universitaire" Height="550" Width="700">
     <DockPanel >
 
-<Menu DockPanel.Dock="Top">
-    
-            <MenuItem Header="Fichier"></MenuItem>
-            <MenuItem Header="Paramètres">
-                <MenuItem Header="Faculté" Click="ButtonBase_OnClick"/>
-                <MenuItem Header="Niveau" Click="ButtonBase_OnClick"/>
-                <MenuItem Header="Année" Click="ButtonBase_OnClick"/>
-                <MenuItem Header="Année scolaire" Click="ButtonBase_OnClick"/>
-                <MenuItem Header="Spécialité" Click="ButtonBase_OnClick"/>
-            </MenuItem>
-            <MenuItem Header="Structure">
-                <MenuItem Header="Modules" Click="ButtonBase_OnClick"/>
-                <MenuItem Header="Salles" Click="ButtonBase_OnClick"/>
-                <MenuItem Header="Séctions" Click="ButtonBase_OnClick"/>
-                <MenuItem Header="Groupes" Click="ButtonBase_OnClick"/>
-                <MenuItem Header="Ensiegnants" Click="ButtonBase_OnClick"/>
-            </MenuItem>
-        </Menu>
+
         <Border BorderBrush="DarkGray"  BorderThickness="2">
             <!--<Border.Background>
                 <LinearGradientBrush EndPoint="0.144,0.49" MappingMode="RelativeToBoundingBox" StartPoint="0.87,0.303">
@@ -64,9 +48,9 @@
 
                     </xPlorerBar:XPlorerSection>
 
-                    <xPlorerBar:XPlorerSection Header="Gestion de magasin">
+                    <xPlorerBar:XPlorerSection Header="Traitement ">
                         <StackPanel>
-                            <xPlorerBar:XPlorerItem ItemText="Bons d'entrées" Click="ButtonBase_OnClick"/>
+                            <xPlorerBar:XPlorerItem ItemText="Ensiegnent-cours" Click="ButtonBase_OnClick"/>
                             <xPlorerBar:XPlorerItem ItemText="Nouveau stock" Click="ButtonBase_OnClick"/>
                             <xPlorerBar:XPlorerItem ItemText="Commandes Internes" Click="ButtonBase_OnClick"/>
                             <xPlorerBar:XPlorerItem ItemText="Bons de sortie" Click="ButtonBase_OnClick"/>
@@ -83,4 +67,4 @@
         </Border>
 
     </DockPanel>
-</Window>
+</controls:Window>

@@ -1,58 +1,114 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Planing.Models;
 
 namespace Planing.Views
 {
     /// <summary>
     /// Interaction logic for GroupView.xaml
     /// </summary>
-    public partial class GroupView : UserControl
+    public partial class GroupView
     {
+        private readonly DbModel _db = new DbModel();
+
         public GroupView()
         {
             InitializeComponent();
+            CbArticle.ItemsSource = _db.Sections.Include("Annee").Include("AnneeScolaire").Include("Specialite").ToList();
+            UpdateDg();
+        }
+
+        private void UpdateDg()
+        {
+            DataGrid.ItemsSource = _db.Groupes.Include("Section").ToList();
         }
 
         private void DeleteButton_OnClick(object sender, RoutedEventArgs e)
         {
-                
+            if (DataGrid.SelectedIndex < 0)
+            {
+                MessageBox.Show("Selectionner un champ", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            var result = MessageBox.Show("Est vous sure!", "Warning", MessageBoxButton.YesNo,
+                MessageBoxImage.Warning);
+            if (!result.ToString().Equals("Yes")) return;
+            var deleted = DataGrid.SelectedItem as Specialite;
+            if (deleted == null) return;
+            _db.Entry(deleted).State = EntityState.Deleted;
+            _db.SaveChanges();
+            UpdateDg();
         }
 
         private void BackButton_OnClick(object sender, RoutedEventArgs e)
         {
-            
+            AddButton.Visibility = Visibility.Visible;
+            UpdateButton.Visibility = Visibility.Visible;
+            DeleteButton.Visibility = Visibility.Visible;
+            var binding = new Binding { ElementName = "DataGrid", Path = new PropertyPath("SelectedItem") };
+            Grid.SetBinding(DataContextProperty, binding);
         }
 
         private void SaveButton_OnClick(object sender, RoutedEventArgs e)
         {
-            
+            var item = (Groupe)Grid.DataContext;
+            if (item.Id <= 0)
+            {
+                _db.Groupes.Add(item);
+                // ((ObservableCollection<Article>)DataGrid.ItemsSource).Add(item);
+            }
+            else
+            {
+                _db.Entry(item).State = EntityState.Modified;
+            }
+            try
+            {
+                _db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message, "Erreurs pendant l'enregistrement", MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+                //((ObservableCollection<Article>)DataGrid.ItemsSource).Remove(item);
+            }
+
+            AddButton.Visibility = Visibility.Visible;
+            UpdateDg();
+            var binding = new Binding { ElementName = "DataGrid", Path = new PropertyPath("SelectedItem") };
+            Grid.SetBinding(DataContextProperty, binding);
+            UpdateButton.Visibility = Visibility.Visible;
+            DeleteButton.Visibility = Visibility.Visible;
         }
 
         private void UpdateButton_OnClick(object sender, RoutedEventArgs e)
         {
-            
+            if (DataGrid.SelectedIndex < 0)
+            {
+                MessageBox.Show("Selectionner un champ", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            AddButton.Visibility = Visibility.Hidden;
+            UpdateButton.Visibility = Visibility.Hidden;
+            DeleteButton.Visibility = Visibility.Hidden;
         }
 
         private void AddButton_OnClick(object sender, RoutedEventArgs e)
         {
-            
+            AddButton.Visibility = Visibility.Hidden;
+            var list = DataGrid.ItemsSource.OfType<Groupe>().ToList();
+            list.Add(new Groupe());
+            Grid.DataContext = list.Last();  
         }
 
         private void CbCategorie_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+          
         }
     }
 }
