@@ -5,12 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:converters="clr-namespace:Planing.Converters"
              xmlns:helpers="clr-namespace:WPF.Core.Helpers;assembly=WPF.Core"
-             xmlns:models="clr-namespace:Planing.Models" x:Class="Planing.Views.SpecialiteView"
+            
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             x:Class="Planing.Views.SpecialiteView"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="500">
     <UserControl.Resources>
         <converters:Nan2Visible x:Key="Nan2Visible"/>
-        <converters:Visible2Enable x:Key="Visible2Enable"/>
         <converters:Visible2NDisable x:Key="Visible2Disable"/>
     </UserControl.Resources>
 
@@ -18,6 +19,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition />
+            <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
         <Grid DockPanel.Dock="Top" >
             <Grid.ColumnDefinitions>
@@ -31,7 +33,7 @@
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="30"/>
-                        <RowDefinition Height="0"/>
+                        <RowDefinition Height="30"/>
                         <RowDefinition Height="0"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
@@ -42,11 +44,19 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock VerticalAlignment="Center" Text="Code Spécialité:"/>
                     <TextBox CharacterCasing="Upper"  
+                             Height="25"
 						IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}" 
 						Grid.Row="0" Margin="2" Grid.Column="1" 
 						Text="{Binding Code}"/>
+                    <TextBlock Grid.Row="3"  Grid.Column="0"  VerticalAlignment="Center" Text="Code Spécialité:"/>
+                    <TextBox CharacterCasing="Upper"  
+                             Height="25"
+						IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}" 
+						Grid.Row="3" Margin="2" Grid.Column="1" 
+						Text="{Binding LibelleAr}"/>
                     <TextBlock VerticalAlignment="Center" Grid.Column="2" Grid.Row="0" Text="Libelle:"/>
                     <TextBox CharacterCasing="Upper"
+                             Height="25"
 						Margin="2"
 						IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}" 
 						Grid.Row="0" Grid.Column="3" 
@@ -54,6 +64,7 @@
                     <TextBlock VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" Text="Faculté:"/>
                     <ComboBox SelectionChanged="CbCategorie_OnSelectionChanged" IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}"
 						x:Name="CbCategorie" 
+                              Height="25"
 						Grid.Column="1" 
 						Grid.Row="1" 
 						Margin="2"
@@ -64,6 +75,7 @@
                   
                     <TextBlock VerticalAlignment="Center" Grid.Column="2" Grid.Row="1" Text="Niveau:"/>
                     <ComboBox Margin="2" 
+                              Height="25"
 						IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}"
 						x:Name="CbNieau" 
                              
@@ -76,6 +88,7 @@
                     <TextBlock VerticalAlignment="Center" Grid.Column="0" Grid.Row="2" Text="Département:"/>
                     <ComboBox SelectionChanged="CbCategorie_OnSelectionChanged" IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}"
 						x:Name="CbDepartement" 
+                              Height="25"
 						Grid.Column="1" 
 						Grid.Row="2" 
 						Margin="2"
@@ -117,26 +130,23 @@
                 <RowDefinition Height="30"/>
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <DataGrid
+            <dxg:GridControl
 				Grid.Column="0"
 				Grid.Row="0"
 				Grid.RowSpan="5"
-				AutoGenerateColumns="False" 
-				CanUserAddRows="False" 
-				IsReadOnly="True"
+				
 				x:Name="DataGrid">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Width="*" Header="Module" Binding="{Binding Name}"/>
-                    <DataGridTextColumn Width="*" Header="Code" Binding="{Binding Code}"/>
-                    <DataGridTextColumn Width="*" Header="Spécialité" Binding="{Binding Faculte.Libelle}"/>
-                    <DataGridTextColumn Width="*" Header="Niveau" Binding="{Binding Niveau.Libelle}"/>
-                    <DataGridTextColumn Width="*" Header="Fillière" Binding="{Binding Filliere.Libelle}"/>
-                </DataGrid.Columns>
-                <DataGrid.DataContext>
-                    <models:Specialite/>
-                </DataGrid.DataContext>
-            </DataGrid>
+                <dxg:GridControl.Columns>
+                    <dxg:GridColumn  Header="Module" Binding="{Binding Name}"/>
+                    <dxg:GridColumn  Header="Code" Binding="{Binding Code}"/>
+                    <dxg:GridColumn  Header="Spécialité" Binding="{Binding Faculte.Libelle}"/>
+                    <dxg:GridColumn  Header="Niveau" Binding="{Binding Niveau.Libelle}"/>
+                    <dxg:GridColumn  Header="Fillière" Binding="{Binding Filliere.Libelle}"/>
+                </dxg:GridControl.Columns>
+                
+            </dxg:GridControl>
             <Button  
+                Style="{DynamicResource  NuclearBlueButton}"
                 FontSize="9"
 				Visibility="Visible" 
 				x:Name="AddButton" 
@@ -147,6 +157,7 @@
 				Grid.Row="0" Grid.Column="1" />
             <Button 
                 FontSize="9"
+                Style="{DynamicResource  NuclearBlueButton}"
 				Click="UpdateButton_OnClick"
 				x:Name="UpdateButton"  
 				Margin="5,0,0,2" 
@@ -154,6 +165,7 @@
 				Grid.Row="1" Grid.Column="1"/>
             <Button  
                      FontSize="9"
+                Style="{DynamicResource  NuclearBlueButton}"
 				Visibility="{Binding Visibility, Converter={StaticResource Nan2Visible}, ElementName=AddButton}" 
 				x:Name="SaveButton"  
 				Margin="5,0,0,2" 
@@ -162,6 +174,7 @@
 				Grid.Row="0" Grid.Column="1"/>
             <Button 
                 FontSize="9"
+                Style="{DynamicResource  NuclearBlueButton}"
 				x:Name="BackButton"  
 				Visibility="{Binding Visibility, Converter={StaticResource Nan2Visible}, ElementName=AddButton}" 
 				Margin="5,0,0,2" 
@@ -170,12 +183,27 @@
 				Grid.Row="1" Grid.Column="1"/>
             <Button
                 FontSize="9"
+                Height="25"
+                Style="{DynamicResource  NuclearGreenButton}"
 				x:Name="DeleteButton" 
 				Click="DeleteButton_OnClick"
 				Margin="5,0,0,2" 
 				Content="Supprimer" 
 				Grid.Row="2" Grid.Column="1"/>
-
+            <Button
+                FontSize="9"
+                Height="25"
+				x:Name="ImportButton" 
+				Click="ImportButton_OnClick"
+                Style="{DynamicResource  NuclearBlueButton}"
+				Margin="5,0,0,2" 
+				
+				Grid.Row="3" Grid.Column="1">
+               
+                      
+                  
+                </Button>
         </Grid>
+        <ProgressBar Name="ProgressBar" Grid.Row="2"/>
     </Grid>
 </UserControl>

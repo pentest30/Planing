@@ -1,0 +1,108 @@
+﻿<UserControl xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" 
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:helpers="clr-namespace:WPF.Core.Helpers;assembly=WPF.Core"
+             x:Class="Planing.Views.SchedulView" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+<Grid.ColumnDefinitions>
+          
+            <ColumnDefinition/>
+    <ColumnDefinition Width="140"/>
+</Grid.ColumnDefinitions>
+        <GroupBox  BorderBrush="Gray" Margin="5" Header="Display the timetable:">
+            <Grid DataContext="{Binding ElementName=DataGrid , Path=SelectedItem}" Name="Grid" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="0"/>
+                    <RowDefinition Height="0"/>
+                </Grid.RowDefinitions>
+
+
+
+                <TextBlock VerticalAlignment="Center" Text="Faculté:"/>
+                <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Text="Semestre:"/>
+                <TextBox Margin="2" Name="SemestreTxt" Height="25" SelectionChanged="SemestreTxt_OnSelectionChanged"  helpers:TextBoxMaskBehavior.Mask="Integer"  Grid.Column="3" Grid.Row="0"/>
+                <ComboBox x:Name="CbCategorie" 
+                          Height="25"
+                          SelectionChanged="CbCategorie_OnSelectionChanged"
+						Grid.Column="1" 
+						Grid.Row="0" 
+						Margin="2"
+						DisplayMemberPath="Libelle"
+						SelectedValue="{Binding FaculteId}" 
+						SelectedValuePath="Id"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Année scolaire:"/>
+                <helpers:AutoFilteredComboBox x:Name="CbAs" 
+						Grid.Column="1" 
+						Grid.Row="1" 
+						Margin="2"
+                        SelectionChanged="CbAnnee_OnSelectionChanged"
+						DisplayMemberPath="Name"
+						SelectedValue="{Binding AnneeScoliareId}" 
+						SelectedValuePath="Id"/>
+                <TextBlock Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Text="Enseignant:"/>
+
+                <helpers:AutoFilteredComboBox Margin="2" 
+				 	x:Name="CbEnseignant" 
+						Grid.Column="3" 
+                                              SelectionChanged="CbEnseignant_OnSelectionChanged"
+						Grid.Row="1" 
+						DisplayMemberPath="FullName"
+						SelectedValue="{Binding TeacherId}" 
+						SelectedValuePath="Id"
+						/>
+
+            </Grid>
+        </GroupBox>
+        <Grid Grid.Row="1" Grid.Column="1">
+           <Grid.RowDefinitions>
+               <RowDefinition Height="30"/>
+               <RowDefinition />
+           </Grid.RowDefinitions>
+            <Button Name="Button"  Style="{DynamicResource NuclearGreenButton}" Click="Button_OnClick" Content="Modification Manuelle" Margin="2" FontSize="11"/>
+        </Grid>
+        <dxg:GridControl    Grid.Column="0" Grid.Row="1" x:Name="GridControl" SelectedItemChanged="GridControl_OnSelectedItemChanged" >
+            <dxg:GridControl.Columns>
+                <dxg:GridColumn ReadOnly="True" Width="180" Header="Enseignant" FieldName="Teacher.Nom"/>
+                <dxg:GridColumn ReadOnly="True" Width="180" Header="Cours" FieldName="Course.Name"/>
+                <dxg:GridColumn ReadOnly="True" Width="100" Header="Classe" FieldName="ClassRoom.Name"/>
+                <dxg:GridColumn Width="80" ReadOnly="True" Header="Temp" FieldName="Time"/>
+                <dxg:GridColumn Width="100" ReadOnly="True" Header="Jour" FieldName="Jour"/>
+                <dxg:GridColumn Width="220" ReadOnly="True" Header="Séction" FieldName="Section.Name"/>
+                <dxg:GridColumn Width="100" ReadOnly="True" Header="Groupe" FieldName="Groupe.Name"/>
+            </dxg:GridControl.Columns>
+          
+            <dxg:GridControl.GroupSummary>
+                <dxg:GridSummaryItem FieldName="Cours" SummaryType="Count" />
+            </dxg:GridControl.GroupSummary>
+        </dxg:GridControl>
+        <dxg:GridControl Grid.Column="0" Grid.Row="2" x:Name="GridControl2"  >
+            <dxg:GridControl.Columns>
+                <dxg:GridColumn Width="180" Header="Classe" FieldName="ClassRoom.Name"/>
+                <dxg:GridColumn Width="180" Header="Type de classe" FieldName="TypeClass"/>
+                <dxg:GridColumn Width="80" Header="Temp" FieldName="Time"/>
+                <dxg:GridColumn Width="100" Header="Jour" FieldName="Jour"/>
+               
+            </dxg:GridControl.Columns>
+            <dxg:GridControl.GroupSummary>
+                <dxg:GridSummaryItem FieldName="Cours" SummaryType="Count" />
+            </dxg:GridControl.GroupSummary>
+        </dxg:GridControl>
+    </Grid>
+</UserControl>

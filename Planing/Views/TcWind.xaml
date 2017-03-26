@@ -1,0 +1,125 @@
+﻿<Window x:Class="Planing.Views.TcWind"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+          xmlns:helpers="clr-namespace:WPF.Core.Helpers;assembly=WPF.Core"
+      Height="330"
+       WindowStyle="ToolWindow"
+               
+        Title="" >
+    <GroupBox BorderBrush="Gray" Header="Teacher / Course:" Margin="10" >
+        <Grid x:Name="Grid" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="35"/>
+
+                <RowDefinition Height="0"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock VerticalAlignment="Center" Grid.Column="0" Grid.Row="0" Text="Spécialité:"/>
+            <helpers:AutoFilteredComboBox SelectionChanged="CbCategorie_OnSelectionChanged" 
+						x:Name="CbCategorie" 
+						Grid.Column="1" 
+						Grid.Row="0" 
+						Margin="2"
+						DisplayMemberPath="Name"
+						SelectedValue="{Binding SpecialiteId}" 
+						SelectedValuePath="Id"/>
+
+            <TextBlock VerticalAlignment="Center" Grid.Column="2" Grid.Row="0" Text="Année:"/>
+            <helpers:AutoFilteredComboBox Margin="2" 
+						x:Name="CbAnnee" 
+						Grid.Column="3" 
+						Grid.Row="0" 
+						SelectionChanged="CbAnnee_OnSelectionChanged"
+						DisplayMemberPath="Name"
+						SelectedValue="{Binding AnneeId}" 
+						SelectedValuePath="Id"
+						/>
+            <TextBlock Grid.Row="1" Grid.Column="0"  VerticalAlignment="Center" Text="Enseignant:"/>
+            <helpers:AutoFilteredComboBox Margin="2" 
+						x:Name="CbEnseignant" 
+						Grid.Column="1" 
+						Grid.Row="1" 
+						DisplayMemberPath="FullName"
+						SelectedValue="{Binding TeacherId}" 
+						SelectedValuePath="Id"
+						/>
+            <TextBlock VerticalAlignment="Center" Grid.Column="2" Grid.Row="1" Text="Cours:"/>
+            <helpers:AutoFilteredComboBox Margin="2" 
+						x:Name="CbCours" 
+						SelectionChanged="CbCours_OnSelectionChanged"
+						Grid.Column="3" 
+						Grid.Row="1" 
+						DisplayMemberPath="Name"
+						SelectedValue="{Binding CourseId}" 
+						SelectedValuePath="Id"
+						/>
+
+
+            <TextBlock VerticalAlignment="Center" Grid.Column="0" Grid.Row="2" Text="Séction: "/>
+            <helpers:AutoFilteredComboBox Margin="2" 
+						x:Name="CbArticle" 
+						SelectionChanged="CbArticle_OnSelectionChanged"                
+						Grid.Column="1" 
+						Grid.Row="2" 
+						DisplayMemberPath="Name"
+						SelectedValue="{Binding SectionId}" 
+						SelectedValuePath="Id"
+						/>
+
+
+            <TextBlock VerticalAlignment="Center" Grid.Column="2" Grid.Row="2" Text="Groupe:"/>
+            <helpers:AutoFilteredComboBox Margin="2" 
+						x:Name="CbSousCategorie" 
+						Grid.Column="3" 
+						Grid.Row="2" 
+						DisplayMemberPath="Name"
+						SelectedValue="{Binding GroupeId}" 
+						SelectedValuePath="Id"
+						/>
+            <TextBlock VerticalAlignment="Center" Grid.Column="0" Grid.Row="3" Text="Type de Classe:"/>
+            <ComboBox SelectionChanged="CbCategorie_OnSelectionChanged" 
+                       Height="25"
+						x:Name="CbTypeCourse" 
+						Grid.Column="1" 
+						Grid.Row="3" 
+						Margin="2"
+						DisplayMemberPath="Name"
+						SelectedValue="{Binding ClassRoomTypeId}" 
+						SelectedValuePath="Id"/>
+            <TextBlock VerticalAlignment="Center" Grid.Column="2" Grid.Row="3" Text="Nombre de séances:"/>
+            <TextBox helpers:TextBoxMaskBehavior.Mask="Integer"
+                      Height="25"
+						Grid.Row="3" 
+						Grid.Column="3"
+                             
+						Margin="2"
+						Text="{Binding ScheduleWieght}"/>
+            <TextBlock VerticalAlignment="Center" Grid.Column="0" Grid.Row="4" Text="Période:"/>
+            <ComboBox SelectionChanged="CbCategorie_OnSelectionChanged" 
+                       Height="25"
+						x:Name="CbOptions" 
+						Grid.Column="1" 
+						Grid.Row="4" 
+						Margin="2"
+						DisplayMemberPath="Value"
+						SelectedValue="{Binding Periode}" 
+						SelectedValuePath="Key"/>
+            <Separator Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3" BorderThickness="2" BorderBrush="Gray"/>
+
+            <Button FontSize="11" Content="Annuler" Grid.Column="3" Style="{DynamicResource  NuclearBlueButton}" Height="25" Grid.Row="6"  Width="100"   VerticalAlignment="Bottom" Margin="84,0,117,0"/>
+
+            <Button FontSize="11" Click="ButtonBase_OnClick" Content="Enregistrer" Grid.Column="3" Grid.Row="6" Style="{DynamicResource  NuclearBlueButton}" Height="25"  Width="100" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+        </Grid>
+    </GroupBox>
+</Window>
