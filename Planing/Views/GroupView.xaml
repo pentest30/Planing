@@ -5,11 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:converters="clr-namespace:Planing.Converters"
              xmlns:helpers="clr-namespace:WPF.Core.Helpers;assembly=WPF.Core"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <converters:Nan2Visible x:Key="Nan2Visible"/>
-        <converters:Visible2Enable x:Key="Visible2Enable"/>
+     
         <converters:Visible2NDisable x:Key="Visible2Disable"/>
     </UserControl.Resources>
 
@@ -17,6 +18,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition />
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid DockPanel.Dock="Top" >
             <Grid.ColumnDefinitions>
@@ -24,11 +26,11 @@
                 <ColumnDefinition Width="160"/>
             </Grid.ColumnDefinitions>
 
-            <GroupBox BorderBrush="Gray" Header="Module:" Margin="10" >
+            <GroupBox BorderBrush="Gray" Header="Groups:" Margin="10" >
                 <Grid x:Name="Grid" Margin="10" DataContext="{Binding ElementName=DataGrid ,Path=SelectedItem}" >
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
                         <RowDefinition Height="0"/>
                         <RowDefinition Height="0"/>
                         <RowDefinition Height="0"/>
@@ -39,28 +41,39 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock VerticalAlignment="Center" Text="Code Groupe:"/>
+                    <TextBlock VerticalAlignment="Center" Text="Code Groupe: "/>
                     <TextBox CharacterCasing="Upper"  
+                              Height="25"
 						IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}" 
 						Grid.Row="0" Margin="2" Grid.Column="1" 
 						Text="{Binding Code}"/>
-                    <TextBlock VerticalAlignment="Center" Grid.Column="2" Grid.Row="0" Text="Libelle:"/>
+                    <TextBlock VerticalAlignment="Center" Grid.Column="2" Grid.Row="0" Text="Libelle: "/>
                     <TextBox CharacterCasing="Upper"
                              Margin="2"
+                              Height="25"
 						IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}" 
 						Grid.Row="0" Grid.Column="3" 
-						Text="{Binding Libelle}"/>
-                    <TextBlock VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" Text="Séction:"/>
-                    <ComboBox SelectionChanged="CbCategorie_OnSelectionChanged" IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}"
-						x:Name="CbCategorie" 
+						Text="{Binding Name}"/>
+                    <TextBlock VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" Text="Séction: "/>
+                    <helpers:AutoFilteredComboBox Margin="2" 
+						IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}"
+						x:Name="CbArticle" 
+                                             
 						Grid.Column="1" 
 						Grid.Row="1" 
-                              Margin="2"
-						DisplayMemberPath="Libelle"
-						SelectedValue="{Binding SpecialiteId}" 
-						SelectedValuePath="Id"/>
+						DisplayMemberPath="Name"
+						SelectedValue="{Binding SectionId}" 
+						SelectedValuePath="Id"
+						/>
 
-                  
+
+                    <TextBlock Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Text="Nombre etudiants: "/>
+                    <TextBox CharacterCasing="Upper" 
+                              Height="25"
+                              helpers:TextBoxMaskBehavior.Mask="Integer"
+						IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}" 
+						Grid.Row="1" Margin="2" Grid.Column="3" 
+						Text="{Binding Nombre}"/>
                 </Grid>
             </GroupBox>
             <Grid Grid.Column="1" Margin="20">
@@ -83,37 +96,39 @@
                 <RowDefinition Height="30"/>
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <DataGrid
+            <dxg:GridControl
 				Grid.Column="0"
+                SelectionChanged="DataGrid_OnSelectionChanged"
 				Grid.Row="0"
 				Grid.RowSpan="5"
-				AutoGenerateColumns="False" 
-				CanUserAddRows="False" 
-				IsReadOnly="True"
+				
 				x:Name="DataGrid">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Width="*" Header="Module" Binding="{Binding Path=Libelle}"/>
-                    <DataGridTextColumn Width="*" Header="Code" Binding="{Binding Code}"/>
-                    <DataGridTextColumn Width="*" Header="Spécialité" Binding="{Binding Specialite.Libelle}"/>
-                    <DataGridTextColumn Width="*" Header="Année" Binding="{Binding Annee.Name}"/>
-                </DataGrid.Columns>
-            </DataGrid>
+                <dxg:GridControl.Columns>
+                    <dxg:GridColumn  Header="Module" Binding="{Binding Path=Name}"/>
+                    <dxg:GridColumn  Header="Code" Binding="{Binding Code}"/>
+                    <dxg:GridColumn  Header="Séction" Binding="{Binding Section.Name}"/>
+                    <dxg:GridColumn Header="Spécialité" Binding="{Binding Section.Specialite.Name}"/>
+                    <dxg:GridColumn Header="Nbr etudiants" Binding="{Binding Nombre}"/>
+                </dxg:GridControl.Columns>
+            </dxg:GridControl>
             <Button  
 				Visibility="Visible" 
 				x:Name="AddButton" 
 				Click="AddButton_OnClick"
-                        
+                        FontSize="9"
 				Margin="5,0,0,2" 
 				Content="Ajouter"
 				Grid.Row="0" Grid.Column="1" />
             <Button  
 				Click="UpdateButton_OnClick"
-				x:Name="UpdateButton"  
+				x:Name="UpdateButton" 
+                FontSize="9"
 				Margin="5,0,0,2" 
 				Content="Modifier" 
+               
 				Grid.Row="1" Grid.Column="1"/>
             <Button  
-                     
+                    FontSize="9" 
 				Visibility="{Binding Visibility, Converter={StaticResource Nan2Visible}, ElementName=AddButton}" 
 				x:Name="SaveButton"  
 				Margin="5,0,0,2" 
@@ -121,6 +136,7 @@
 				Content="Enregistrer" 
 				Grid.Row="0" Grid.Column="1"/>
             <Button 
+                FontSize="9"
 				x:Name="BackButton"  
 				Visibility="{Binding Visibility, Converter={StaticResource Nan2Visible}, ElementName=AddButton}" 
 				Margin="5,0,0,2" 
@@ -132,8 +148,47 @@
 				Click="DeleteButton_OnClick"
 				Margin="5,0,0,2" 
 				Content="Supprimer" 
+                FontSize="9"
 				Grid.Row="2" Grid.Column="1"/>
+            <Button
+				x:Name="AddGroupButton" 
+				Click="AddGroupButton_OnClick"
+				Margin="5,0,0,2" 
+				Content="Plusieurs groups" 
+                FontSize="9"
+				Grid.Row="3" Grid.Column="1"/>
 
+        </Grid>
+        <Grid Grid.Row="2" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="150"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <dxg:GridControl
+                
+				Grid.Column="0"
+				Grid.Row="0"
+                Grid.RowSpan="5"
+				
+				x:Name="DataGridSalle">
+                <dxg:GridControl.Columns>
+                    <dxg:GridColumn   Header="Nom" Binding="{Binding ClassRoom.Name}"/>
+                    <dxg:GridColumn  Header="Type de salle" Binding="{Binding ClassRoom.ClassRoomType.Name}"/>
+                </dxg:GridControl.Columns>
+            </dxg:GridControl>
+            <Button Grid.Row="0" Grid.Column="1" FontSize="9"
+                    Content="Ajouter salle"
+                     Margin="5,0,0,2" 
+                    
+                    Name="LBonAddBtn"
+                    Click="LBonAddBtn_OnClick"/>
         </Grid>
     </Grid>
 </UserControl>

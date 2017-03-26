@@ -3,15 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-   
-     xmlns:bsFilter="http://schemas.bolapansoft.com/xaml/Controls/ItemsFilter"
-  
-    xmlns:converters="clr-namespace:Planing.Converters"
-    xmlns:helpers="clr-namespace:WPF.Core.Helpers;assembly=WPF.Core"
-    x:Class="Planing.Views.ArticleView"
-             mc:Ignorable="d" 
+             xmlns:bsFilter="http://schemas.bolapansoft.com/xaml/Controls/ItemsFilter"
+             xmlns:converters="clr-namespace:Planing.Converters"
+             xmlns:helpers="clr-namespace:WPF.Core.Helpers;assembly=WPF.Core"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             x:Class="Planing.Views.ArticleView"
+    mc:Ignorable="d" 
              >
     <UserControl.Resources>
+        
          <converters:Nan2Visible x:Key="Nan2Visible"/>
         <converters:Visible2Enable x:Key="Visible2Enable"/>
         <converters:Visible2NDisable x:Key="Visible2Disable"/>
@@ -21,20 +21,20 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition />
+            <RowDefinition Height="25" />
         </Grid.RowDefinitions>
-        <Grid DockPanel.Dock="Top" >
+        <Grid DockPanel.Dock="Top" DataContext="{Binding ElementName=DataGrid  , Path=SelectedItem}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="160"/>
-            </Grid.ColumnDefinitions>
+               </Grid.ColumnDefinitions>
            
             <GroupBox BorderBrush="Gray" Header="Module:" Margin="10" >
-                <Grid x:Name="Grid" Margin="10" DataContext="{Binding ElementName=DataGrid ,Path=SelectedItem}" >
+                <Grid x:Name="Grid" Margin="10" >
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="0"/>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
                         <RowDefinition Height="0"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
@@ -45,19 +45,22 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock VerticalAlignment="Center" Text="Code module:"/>
                     <TextBox CharacterCasing="Upper"  
+                              Height="25"
 						IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}" 
 						Grid.Row="0" Margin="2" Grid.Column="1" 
 						Text="{Binding Code}"/>
                     <TextBlock VerticalAlignment="Center" Grid.Column="2" Grid.Row="0" Text="Libelle:"/>
                     <TextBox CharacterCasing="Upper"
+                             Height="25"
                              Margin="2"
 						IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}" 
 						Grid.Row="0" Grid.Column="3" 
-						Text="{Binding Libelle}"/>
+						Text="{Binding Name}"/>
                     <TextBlock VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" Text="Spécialité:"/>
                     <ComboBox SelectionChanged="CbCategorie_OnSelectionChanged" IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}"
 						x:Name="CbCategorie" 
 						Grid.Column="1" 
+                              Height="25"
 						Grid.Row="1" 
                               Margin="2"
 						DisplayMemberPath="Name"
@@ -77,21 +80,26 @@
                     <TextBlock VerticalAlignment="Center" Grid.Column="0" Grid.Row="2" Text="Type de Module:"/>
                     <ComboBox SelectionChanged="CbCategorie_OnSelectionChanged" IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}"
 						x:Name="CbTypeCourse" 
+                              Height="25"
 						Grid.Column="1" 
 						Grid.Row="2" 
                               Margin="2"
 						DisplayMemberPath="Name"
-						SelectedValue="{Binding SpecialiteId}" 
+						SelectedValue="{Binding CourseTypeId}" 
 						SelectedValuePath="Id"/>
+                    <TextBlock VerticalAlignment="Center" Grid.Column="2" Grid.Row="2" Text="Semestre:"/>
+                    <TextBox helpers:TextBoxMaskBehavior.Mask="Integer"
+                             Height="25"
+						IsEnabled="{Binding Visibility, Converter={StaticResource Visible2Disable}, ElementName=AddButton}" 
+						Grid.Row="2" 
+						Grid.Column="3"
+                             
+						Margin="2"
+						Text="{Binding Semestre}"/>
+                  
                 </Grid>
             </GroupBox>
-            <Grid Grid.Column="1" Margin="20">
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-               
-                 </Grid>
+         
         </Grid>
         <Grid Grid.Row="1" Margin="10" >
             <Grid.ColumnDefinitions>
@@ -105,34 +113,35 @@
                 <RowDefinition Height="30"/>
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <DataGrid
+            <dxg:GridControl 
 				Grid.Column="0"
 				Grid.Row="0"
 				Grid.RowSpan="5"
-				AutoGenerateColumns="False" 
-				CanUserAddRows="False" 
-				IsReadOnly="True"
+				
 				x:Name="DataGrid">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Width="*" Header="Module" Binding="{Binding Path=Libelle}"/>
-                    <DataGridTextColumn Width="*" Header="Code" Binding="{Binding Code}"/>
-                    <DataGridTextColumn Width="*" Header="Spécialité" Binding="{Binding Specialite.Libelle}"/>
-                    <DataGridTextColumn Width="*" Header="Année" Binding="{Binding Annee.Name}"/>
-                </DataGrid.Columns>
-            </DataGrid>
+                <dxg:GridControl.Columns>
+                    <dxg:GridColumn  Header="Module" Binding="{Binding Path=Name}"/>
+                    <dxg:GridColumn  Header="Code" Binding="{Binding Code}"/>
+                    <dxg:GridColumn  Header="Spécialité" Binding="{Binding Specialite.Name}"/>
+                    <dxg:GridColumn Header="Année" Binding="{Binding Annee.Name}"/>
+                </dxg:GridControl.Columns>
+            </dxg:GridControl>
             <Button  
+                Style="{DynamicResource NuclearBlueButton}"
 				Visibility="Visible" 
 				x:Name="AddButton" 
 				Click="AddButton_OnClick"
-                        
+                       FontSize="9" 
 				Margin="5,0,0,2" 
 				Content="Ajouter"
 				Grid.Row="0" Grid.Column="1" />
             <Button  
+                Style="{DynamicResource NuclearBlueButton}"
 				Click="UpdateButton_OnClick"
 				x:Name="UpdateButton"  
 				Margin="5,0,0,2" 
 				Content="Modifier" 
+                FontSize="9"
 				Grid.Row="1" Grid.Column="1"/>
             <Button  
                      
@@ -150,12 +159,23 @@
 				Click="BackButton_OnClick"
 				Grid.Row="1" Grid.Column="1"/>
             <Button
+                Style="{DynamicResource NuclearBlueButton}"
 				x:Name="DeleteButton" 
 				Click="DeleteButton_OnClick"
 				Margin="5,0,0,2" 
 				Content="Supprimer" 
+                FontSize="9"
 				Grid.Row="2" Grid.Column="1"/>
-      
+            <Button
+                Style="{DynamicResource NuclearBlueButton}"
+				x:Name="ExportBtn" 
+				Click="ExportBtn_OnClick"
+				Margin="5,0,0,2" 
+				Content="Importer" 
+                FontSize="9"
+				Grid.Row="3" Grid.Column="1"/>
+
         </Grid>
+        <ProgressBar Grid.Row="2" Name="ProgressBar"/>
     </Grid>
 </UserControl>
